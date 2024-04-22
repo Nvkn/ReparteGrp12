@@ -13,17 +13,17 @@ public class Grupo {
     public Grupo(String titulo, int id, String descripcion) {
     	 // Validación del identificador (ID)
         if (!esIdValido(id)) {
-            throw new IllegalArgumentException("El identificador del grupo es inválido.");
+            throw new IllegalArgumentException("El identificador del grupo no puede ser nulo ni vacío.");
         }
         
         // Validación del Titulo
         if (!esTituloValido(titulo)) {
-            throw new IllegalArgumentException("El Titulo no tiene un formato válido.");
+            throw new IllegalArgumentException("El Titulo del grupo no puede ser nulo ni vacío.");
         }
 
         // Validación de la Descripcion
         if (!esDescripcionValida(descripcion)) {
-            throw new IllegalArgumentException("La Descripción tiene un formato inválido");
+            throw new IllegalArgumentException("La descripcion del grupo no puede ser nula ni vacía.");
         }
 
         this.titulo = titulo;

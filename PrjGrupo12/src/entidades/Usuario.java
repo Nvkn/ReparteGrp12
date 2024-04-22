@@ -95,7 +95,7 @@ public class Usuario {
 
     public void setId(String id) {
         if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("El identificador del usuario no puede ser nulo ni vacío.");
+            throw new IllegalArgumentException("El identificador del usuario es inválido. Debe tener entre 4 y 20 caracteres y no puede estar vacío.");
         }
         this.id = id;
     }
@@ -106,7 +106,7 @@ public class Usuario {
 
     public void setCorreo(String correo) {
         if (!esCorreoValido(correo)) {
-            throw new IllegalArgumentException("El correo proporcionado no tiene un formato válido.");
+            throw new IllegalArgumentException("El correo electrónico no tiene un formato válido.");
         }
         this.correo = correo;
     }
@@ -117,7 +117,7 @@ public class Usuario {
 
     public void setPassword(String password) {
         if (!esPasswordValida(password)) {
-            throw new IllegalArgumentException("La contraseña proporcionada no cumple con los requisitos mínimos de seguridad.");
+            throw new IllegalArgumentException("La contraseña proporcionada no es segura. Debe tener entre 8 y 20 caracteres e incluir mayúsculas, minúsculas y al menos un número o símbolo.");
         }
         this.password = password;
     }
