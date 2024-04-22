@@ -4,13 +4,13 @@ import java.util.List;
 
 public class Grupo {
     private String titulo;
-    private int id;
+    private String id;
     private String descripcion;
-    private List<String> usuarios; #ids usuarios
-    private List<String> gastos;   #ids gastos 
+    private List<String> usuarios; // ids usuarios
+    private List<String> gastos;   // ids gastos 
 
           
-    public Grupo(String titulo, int id, String descripcion) {
+    public Grupo(String titulo, String id, String descripcion) {
     	 // Validación del identificador (ID)
         if (!esIdValido(id)) {
             throw new IllegalArgumentException("El identificador del grupo no puede ser nulo ni vacío.");
@@ -60,11 +60,11 @@ public class Grupo {
 	}
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
 		if (esIdValido(id))
 			this.id = id;
 		else
