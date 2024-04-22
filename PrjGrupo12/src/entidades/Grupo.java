@@ -4,26 +4,26 @@ import java.util.List;
 
 public class Grupo {
     private String titulo;
-    private String id;
+    private int id;
     private String descripcion;
-    private List<String> usuarios; // ids usuarios
-    private List<String> gastos;   // ids gastos 
+    private List<String> usuarios; //ids usuarios
+    private List<String> gastos;   //ids gastos 
 
           
-    public Grupo(String titulo, String id, String descripcion) {
+    public Grupo(String titulo, int id, String descripcion) {
     	 // Validación del identificador (ID)
         if (!esIdValido(id)) {
-            throw new IllegalArgumentException("El identificador del grupo no puede ser nulo ni vacío.");
+            throw new IllegalArgumentException("El identificador del grupo es inválido.");
         }
         
         // Validación del Titulo
         if (!esTituloValido(titulo)) {
-            throw new IllegalArgumentException("El Titulo del grupo no puede ser nulo ni vacío.");
+            throw new IllegalArgumentException("El Titulo no tiene un formato válido.");
         }
 
         // Validación de la Descripcion
         if (!esDescripcionValida(descripcion)) {
-            throw new IllegalArgumentException("La descripcion del grupo no puede ser nula ni vacía.");
+            throw new IllegalArgumentException("La Descripción tiene un formato inválido");
         }
 
         this.titulo = titulo;
@@ -60,11 +60,11 @@ public class Grupo {
 	}
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
 		if (esIdValido(id))
 			this.id = id;
 		else
