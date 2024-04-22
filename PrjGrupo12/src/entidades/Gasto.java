@@ -8,10 +8,26 @@ public class Gasto {
 
 	public Gasto(String id, double cantidad, String idUsuario, String idGrupoGasto) {
 		super();
-		this.id = id;
-		this.cantidad = cantidad;
-		this.idUsuario = idUsuario;
-		this.idGrupoGasto = idGrupoGasto;
+		// Id
+		if (esIdValido(id))
+			this.id = id;
+		else
+            throw new IllegalArgumentException("El identificador del gasto no puede ser nulo ni vacío.");
+		// Cantidad
+		if (esCantidadValida(cantidad))
+			this.cantidad = cantidad;
+		else
+            throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
+		// IdUsuario
+		if (esIdUsuarioValido(idUsuario))
+			this.idUsuario = idUsuario;
+		else
+            throw new IllegalArgumentException("El identificador del usuario no puede ser nulo ni vacío.");
+		// IdGrupoGasto
+		if (esIdGrupoGastoValido(idGrupoGasto))
+			this.idGrupoGasto = idGrupoGasto;
+		else
+            throw new IllegalArgumentException("El identificador del grupo de gasto no puede ser nulo ni vacío.");
 	}
 
     private static boolean esIdValido(String id) {
@@ -65,7 +81,6 @@ public class Gasto {
 			this.idUsuario = idUsuario;
 		else
             throw new IllegalArgumentException("El identificador del usuario no puede ser nulo ni vacío.");
-		this.idUsuario = idUsuario;
 	}
 
 	public String getIdGrupoGasto() {
@@ -77,7 +92,6 @@ public class Gasto {
 			this.idGrupoGasto = idGrupoGasto;
 		else
             throw new IllegalArgumentException("El identificador del grupo de gasto no puede ser nulo ni vacío.");
-		this.idGrupoGasto = idGrupoGasto;
 	}
 	
 }
