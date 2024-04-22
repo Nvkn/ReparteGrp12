@@ -10,7 +10,7 @@ class TestGrupo {
 
 	@Nested
 	class RegistrarGrupo {
-	    @DisplayName("CP2_001: ID is null")
+	    @DisplayName("CP2_001: ID null")
 	    @Test
 	    void testIdNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -18,7 +18,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_002: ID is empty")
+	    @DisplayName("CP2_002: ID vacío")
 	    @Test
 	    void testIdEmpty() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -26,7 +26,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_003: Title is null")
+	    @DisplayName("CP2_003: Título null")
 	    @Test
 	    void testTituloNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -34,7 +34,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_004: Title is empty")
+	    @DisplayName("CP2_004: Título vacío")
 	    @Test
 	    void testTituloEmpty() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -42,7 +42,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_005: Description is null")
+	    @DisplayName("CP2_005: Descripción null")
 	    @Test
 	    void testDescripcionNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -50,7 +50,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_006: Description is empty")
+	    @DisplayName("CP2_006: Descripción vacía")
 	    @Test
 	    void testDescripcionEmpty() {
 	        assertThrows(IllegalArgumentException.class, () -> {
@@ -58,7 +58,7 @@ class TestGrupo {
 	        });
 	    }
 	
-	    @DisplayName("CP2_007: All inputs are valid")
+	    @DisplayName("CP2_007: Todo válido")
 	    @Test
 	    void testValidInputs() {
 	        assertDoesNotThrow(() -> {
