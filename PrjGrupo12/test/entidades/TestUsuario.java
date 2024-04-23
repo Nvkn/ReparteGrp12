@@ -88,29 +88,29 @@ public class TestUsuario {
         assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
     }
 
-	@DisplayName("CP1_010: Password solo minúsculas ")
+	@DisplayName("CP1_010: Password sin mayúsculas ")
     @Test
     void CP1_010_PasswordAllMinus_ThrowsIllegalArgumentException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Usuario("idcorrecto", "correo@ejemplo.com", "password");
+            new Usuario("idcorrecto", "correo@ejemplo.com", "password1");
         });
         assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
     }
 	
-	@DisplayName("CP1_011: Password solo mayúsculas ")
+	@DisplayName("CP1_011: Password sin minúsculas ")
     @Test
     void CP1_011_PasswordMissingDigits_ThrowsIllegalArgumentException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Usuario("idcorrecto", "correo@ejemplo.com", "PASSWORD");
+            new Usuario("idcorrecto", "correo@ejemplo.com", "PASSWORD1");
         });
         assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
     }
 
-	@DisplayName("CP1_012: Password solo dígitos ")
+	@DisplayName("CP1_012: Password sin dígitos ")
     @Test
     void CP1_012_PasswordDigitsOnly_ThrowsIllegalArgumentException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Usuario("idcorrecto", "correo@ejemplo.com", "12345678");
+            new Usuario("idcorrecto", "correo@ejemplo.com", "passwords");
         });
         assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
     }
