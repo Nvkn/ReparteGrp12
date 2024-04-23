@@ -14,55 +14,79 @@ class TestGrupo {
 	    @Test
 	    void testIdNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo("asd", null, "asd");
+	            new Grupo("Título", null, "Descripción");
 	        });
 	    }
 	
 	    @DisplayName("CP2_002: ID vacío")
 	    @Test
-	    void testIdEmpty() {
+	    void testIdVacio() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo("asd", "", "asd");
+	            new Grupo("Título", "", "Descripción");
 	        });
 	    }
 	
-	    @DisplayName("CP2_003: Título null")
+	    @DisplayName("CP2_003: ID corto")
+	    @Test
+	    void testIdIdCorto() {
+	        assertThrows(IllegalArgumentException.class, () -> {
+	            new Grupo("Título", "IDG", "Descripción");
+	        });
+	    }
+	
+	    @DisplayName("CP2_004: ID largo")
+	    @Test
+	    void testIdIdLargo() {
+	        assertThrows(IllegalArgumentException.class, () -> {
+	            new Grupo("Título", "ID_G56789012345678901", "Descripción");
+	        });
+	    }
+	
+	    @DisplayName("CP2_005: Título null")
 	    @Test
 	    void testTituloNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo(null, "asd", "asd");
+	            new Grupo(null, "ID_G", "Descripción");
 	        });
 	    }
 	
-	    @DisplayName("CP2_004: Título vacío")
+	    @DisplayName("CP2_006: Título vacío")
 	    @Test
-	    void testTituloEmpty() {
+	    void testTituloVacio() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo("", "asd", "asd");
+	            new Grupo("", "ID_G", "Descripción");
 	        });
 	    }
 	
-	    @DisplayName("CP2_005: Descripción null")
+	    @DisplayName("CP2_007: Descripción null")
 	    @Test
 	    void testDescripcionNull() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo("asd", "asd", null);
+	            new Grupo("Título", "ID_G", null);
 	        });
 	    }
 	
-	    @DisplayName("CP2_006: Descripción vacía")
+	    @DisplayName("CP2_008: Descripción vacía")
 	    @Test
-	    void testDescripcionEmpty() {
+	    void testDescripcionVacia() {
 	        assertThrows(IllegalArgumentException.class, () -> {
-	            new Grupo("asd", "asd", "");
+	            new Grupo("Título", "ID_G", "");
 	        });
 	    }
 	
-	    @DisplayName("CP2_007: Todo válido")
+	    @DisplayName("CP2_009: Todo válido - ID Min")
 	    @Test
-	    void testValidInputs() {
+	    void testValidoIdMin() {
 	        assertDoesNotThrow(() -> {
-	            new Grupo("asd", "asd", "asd");
+	            new Grupo("Título", "ID_G", "Descripción");
+	        });
+	    }
+	
+	    @DisplayName("CP2_010: Todo válido - ID Max")
+	    @Test
+	    void testValidoIdMax() {
+	        assertDoesNotThrow(() -> {
+	            new Grupo("Título", "ID_G5678901234567890", "Descripción");
 	        });
 	    }
 	}
