@@ -1,97 +1,67 @@
 package entidades;
 
 public class Gasto {
-	private String id;
-	private double cantidad;
-	private String idUsuario;
-	private String idGrupoGasto;
+    private double cantidad;
+    private Usuario usuario;
+    private Grupo grupo;
 
-	public Gasto(String id, double cantidad, String idUsuario, String idGrupoGasto) {
-		super();
-		// Id
-		if (esIdValido(id))
-			this.id = id;
-		else
-            throw new IllegalArgumentException("El identificador del gasto no puede ser nulo ni vacío.");
-		// Cantidad
-		if (esCantidadValida(cantidad))
-			this.cantidad = cantidad;
-		else
+    public Gasto(double cantidad, Usuario usuario, Grupo grupo) {
+        // Cantidad
+        if (esCantidadValida(cantidad))
+            this.cantidad = cantidad;
+        else
             throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
-		// IdUsuario
-		if (esIdUsuarioValido(idUsuario))
-			this.idUsuario = idUsuario;
-		else
-            throw new IllegalArgumentException("El identificador del usuario no puede ser nulo ni vacío.");
-		// IdGrupoGasto
-		if (esIdGrupoGastoValido(idGrupoGasto))
-			this.idGrupoGasto = idGrupoGasto;
-		else
-            throw new IllegalArgumentException("El identificador del grupo de gasto no puede ser nulo ni vacío.");
-	}
-
-    private static boolean esIdValido(String id) {
-        return !(id == null || id.trim().isEmpty());
+        // Usuario
+        if (esUsuarioValido(usuario))
+            this.usuario = usuario;
+        else
+            throw new IllegalArgumentException("El usuario no puede ser nulo.");
+        // Grupo
+        if (esGrupoValido(grupo)) {
+            this.grupo = grupo;
+            grupo.agregarGasto(this);
+        } else
+            throw new IllegalArgumentException("El grupo no puede ser nulo.");
     }
-    
-	private static boolean esCantidadValida(double cantidad) {
+
+    private static boolean esCantidadValida(double cantidad) {
         return cantidad > 0;
     }
-	
-    private static boolean esIdUsuarioValido(String idUsuario) {
-        return !(idUsuario == null || idUsuario.trim().isEmpty());
+
+    private static boolean esUsuarioValido(Usuario usuario) {
+        return usuario != null;
     }
 
-    private static boolean esIdGrupoGastoValido(String idGrupoGasto) {
-        return !(idGrupoGasto == null || idGrupoGasto.trim().isEmpty());
+    private static boolean esGrupoValido(Grupo grupo) {
+        return grupo != null;
     }
 
-	public String getId() {
-		return id;
-	}
+
+    public double getCantidad() {
+        return cantidad;
+    }
 
 
-	public void setId(String id) {
-		if (esIdValido(id))
-			this.id = id;
-		else
-            throw new IllegalArgumentException("El identificador del gasto no puede ser nulo ni vacío.");
-	}
-
-
-	public double getCantidad() {
-		return cantidad;
-	}
-
-
-	public void setCantidad(double cantidad) {
-		if (esCantidadValida(cantidad))
-			this.cantidad = cantidad;
-		else
+    public void setCantidad(double cantidad) {
+        if (esCantidadValida(cantidad))
+            this.cantidad = cantidad;
+        else
             throw new IllegalArgumentException("La cantidad debe ser un número positivo.");
-	}
+    }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
 
-	public String getIdUsuario() {
-		return idUsuario;
-	}
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
-	public void setIdUsuario(String idUsuario) {
-		if (esIdUsuarioValido(idUsuario))
-			this.idUsuario = idUsuario;
-		else
-            throw new IllegalArgumentException("El identificador del usuario no puede ser nulo ni vacío.");
-	}
+    public Grupo getGrupo() {
+        return grupo;
+    }
 
-	public String getIdGrupoGasto() {
-		return idGrupoGasto;
-	}
-
-	public void setIdGrupoGasto(String idGrupoGasto) {
-		if (esIdGrupoGastoValido(idGrupoGasto))
-			this.idGrupoGasto = idGrupoGasto;
-		else
-            throw new IllegalArgumentException("El identificador del grupo de gasto no puede ser nulo ni vacío.");
-	}
-	
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
 }
