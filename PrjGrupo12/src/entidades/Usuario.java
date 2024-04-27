@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +9,8 @@ public class Usuario {
     private String id;
     private String correo;
     private String password;
+    private final ArrayList<Grupo> grupos;
+    private final ArrayList<Notificacion> notificaciones;
 
     
     public Usuario(String id, String correo, String password) {
@@ -25,10 +29,11 @@ public class Usuario {
             throw new IllegalArgumentException("La contraseña proporcionada no es segura. Debe tener entre 8 y 20 caracteres e incluir mayúsculas, minúsculas y al menos un número o símbolo.");
         }
 
-        // Asignación de valores a las propiedades del objeto
         this.id = id;
         this.correo = correo;
         this.password = password;
+        this.grupos = new ArrayList<>();
+        this.notificaciones = new ArrayList<>();
     }
 
 
@@ -120,5 +125,33 @@ public class Usuario {
             throw new IllegalArgumentException("La contraseña proporcionada no es segura. Debe tener entre 8 y 20 caracteres e incluir mayúsculas, minúsculas y al menos un número o símbolo.");
         }
         this.password = password;
+    }
+
+    // Métodos adicionales
+    // GRUPO
+    public Grupo crearGrupo(String titulo, String descripcion) {
+        Grupo grupo = new Grupo(titulo, descripcion, this);
+        grupos.add(grupo);
+        return grupo;
+    }
+
+    public void agregarUsuarioAGrupo(Grupo grupo) {
+        if (grupo == null) {
+            throw new IllegalArgumentException("El grupo no puede ser nulo.");
+        }
+        grupos.add(grupo);
+    }
+
+    // GASTO
+    public Gasto crearGasto(double cantidad, Grupo grupo) {
+        return new Gasto(cantidad, this, grupo);
+    }
+    
+    // NOTIFICACION
+    public void agregarNotificacion(Notificacion notificacion) {
+        if (notificacion == null) {
+            throw new IllegalArgumentException("La notificación no puede ser nula.");
+        }
+        notificaciones.add(notificacion);
     }
 }
