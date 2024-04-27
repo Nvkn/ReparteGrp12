@@ -9,8 +9,8 @@ public class Usuario {
     private String id;
     private String correo;
     private String password;
-    private final ArrayList<Grupo> grupos;
-    private final ArrayList<Notificacion> notificaciones;
+    private ArrayList<Grupo> grupos;
+    private ArrayList<Notificacion> notificaciones;
 
     
     public Usuario(String id, String correo, String password) {
@@ -94,38 +94,55 @@ public class Usuario {
 
 
     // Getters y setters
+
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(String id) {
-        if (id == null || id.trim().isEmpty()) {
-            throw new IllegalArgumentException("El identificador del usuario es inválido. Debe tener entre 4 y 20 caracteres y no puede estar vacío.");
-        }
-        this.id = id;
-    }
 
-    public String getCorreo() {
-        return correo;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setCorreo(String correo) {
-        if (!esCorreoValido(correo)) {
-            throw new IllegalArgumentException("El correo electrónico no tiene un formato válido.");
-        }
-        this.correo = correo;
-    }
 
-    public String getPassword() {
-        return password;
-    }
+	public String getCorreo() {
+		return correo;
+	}
 
-    public void setPassword(String password) {
-        if (!esPasswordValida(password)) {
-            throw new IllegalArgumentException("La contraseña proporcionada no es segura. Debe tener entre 8 y 20 caracteres e incluir mayúsculas, minúsculas y al menos un número o símbolo.");
-        }
-        this.password = password;
-    }
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+	public ArrayList<Grupo> getGrupos() {
+		return grupos;
+	}
+
+
+	public void setGrupos(ArrayList<Grupo> grupos) {
+		this.grupos = grupos;
+	}
+
+
+	public ArrayList<Notificacion> getNotificaciones() {
+		return notificaciones;
+	}
+
+
+	public void setNotificaciones(ArrayList<Notificacion> notificaciones) {
+		this.notificaciones = notificaciones;
+	}
 
     // Métodos adicionales
     // GRUPO
@@ -135,7 +152,7 @@ public class Usuario {
         return grupo;
     }
 
-    public void agregarUsuarioAGrupo(Grupo grupo) {
+	public void agregarUsuarioAGrupo(Grupo grupo) {
         if (grupo == null) {
             throw new IllegalArgumentException("El grupo no puede ser nulo.");
         }

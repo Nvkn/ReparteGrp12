@@ -3,14 +3,15 @@ package entidades;
 import java.time.LocalDateTime;
 
 public class Notificacion {
+    private Usuario destinatario;
     private String id;
     private String mensaje;
     private LocalDateTime fecha;
 
     // Constructor
-    public Notificacion(String id, String mensaje, LocalDateTime fecha) {
-        if (!esIdValido(id)) {
-            throw new IllegalArgumentException("El identificador de la notificación no puede ser nulo o vacío y debe ser único para cada notificación.");
+    public Notificacion(Usuario destinatario, String mensaje, LocalDateTime fecha) {
+        if (!esDestinatarioValido(destinatario)) {
+            throw new IllegalArgumentException("El destinatario de la notificación no puede ser nulo.");
         }
 
         if (!esMensajeValido(mensaje)) {
@@ -22,9 +23,18 @@ public class Notificacion {
         }
 
         // Asignación de valores a las propiedades del objeto
-        this.id = id;
+        this.id = destinatario.getId() + "-" + fecha;
+        this.destinatario = destinatario;
         this.mensaje = mensaje;
         this.fecha = fecha;
+
+        // Agregar la notificación al usuario
+        destinatario.agregarNotificacion(this);
+    }
+
+    // Validación del destinatario de la notificación
+    private static boolean esDestinatarioValido(Usuario destinatario) {
+        return destinatario != null;
     }
 
     // Validación del ID de la notificación
@@ -75,4 +85,13 @@ public class Notificacion {
         }
         this.fecha = fecha;
     }
+
+	public Usuario getDestinatario() {
+		return destinatario;
+	}
+
+	public void setDestinatario(Usuario destinatario) {
+		this.destinatario = destinatario;
+	}
+    
 }
