@@ -4,84 +4,99 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 class TestNotificacion {
+    // Abreviaturas
+    String M100C = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m";
+    String M101C = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean ma";
+    LocalDateTime FechaValida = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
+    LocalDateTime FechaPosterior = LocalDateTime.of(2047, 12, 3, 10, 15, 30);
 
-	@Nested
-    class CrearNotificacion {
-        @DisplayName("CP4_001: ID nulo")
-        @Test
-        void testIdNulo() {
-            LocalDateTime fecha = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion(null, "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m", fecha);
-            });
+    Usuario usuarioValido;
+
+    @BeforeEach
+    void setUp() {
+        usuarioValido = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
+    }
+
+    @Nested
+    @DisplayName("CP_N1: Casos de prueba del constructor")
+    class ConstructorTest {
+        @Nested
+        @DisplayName("Clases de equivalencia no válidas de: Destinatario")
+        class CPDestinatario {
+            @DisplayName("CP_N1_01: Destinatario nulo")
+            @Test
+            void CP_N1_01() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(null, M100C, FechaValida);
+                });
+            }
         }
 
-        @DisplayName("CP4_002: ID vacío")
-        @Test
-        void testIdVacio() {
-            LocalDateTime fecha = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m", fecha);
-            });
+        @Nested
+        @DisplayName("Clases de equivalencia no válidas de: Mensaje")
+        class CPMensaje {
+            @DisplayName("CP_N1_02: Mensaje nulo")
+            @Test
+            void CP_N1_02() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(usuarioValido, null, FechaValida);
+                });
+            }
+
+            @DisplayName("CP_N1_03: Mensaje vacío")
+            @Test
+            void CP_N1_03() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(usuarioValido, "", FechaValida);
+                });
+            }
+
+            @DisplayName("CP_N1_04: Mensaje demasiado largo (101 caracteres)")
+            @Test
+            void CP_N1_04() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(usuarioValido, M101C, FechaValida);
+                });
+            }
         }
 
-        @DisplayName("CP4_003: Mensaje nulo")
-        @Test
-        void testMensajeNulo() {
-            LocalDateTime fecha = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("ID", null, fecha);
-            });
+        @Nested
+        @DisplayName("Clases de equivalencia no válidas de: Mensaje")
+        class CPFecha {
+            @DisplayName("CP_N1_05: Fecha nula")
+            @Test
+            void CP_N1_05() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(usuarioValido, M100C, null);
+                });
+            }
+
+            @DisplayName("CP_N1_06: Fecha posterior")
+            @Test
+            void CP_N1_06() {
+                assertThrows(IllegalArgumentException.class, () -> {
+                    new Notificacion(usuarioValido, M100C, FechaPosterior);
+                });
+            }
         }
 
-        @DisplayName("CP4_004: Mensaje vacío")
-        @Test
-        void testMensajeVacio() {
-            LocalDateTime fecha = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("ID", "", fecha);
-            });
+        @Nested
+        @DisplayName("Clases de equivalencia válidas")
+        class CPValidas {
+            @DisplayName("CP_N1_06: Mensaje máximo")
+            @Test
+            void CP_GA1_04() {
+                assertDoesNotThrow(() -> {
+                    new Notificacion(usuarioValido, M100C, FechaValida);
+                });
+            }
         }
-
-        @DisplayName("CP4_005: Mensaje largo")
-        @Test
-        void testMensajeLargo() {
-            LocalDateTime fecha = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("ID", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean mA", fecha);
-            });
-        }
-
-        @DisplayName("CP4_006: Fecha nula")
-        @Test
-        void testFechaNula() {
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("ID", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m", null);
-            });
-        }
-
-        @DisplayName("CP4_007: Fecha futura")
-        @Test
-        void testFechaFutura() {
-            LocalDateTime fechaFutura = LocalDateTime.of(2047, 12, 3, 10, 15, 30);
-            assertThrows(IllegalArgumentException.class, () -> {
-                new Notificacion("ID", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m", fechaFutura);
-            });
-        }
-
-        @DisplayName("CP4_008: Caso válido")
-        @Test
-        void testValidoFechaCorrecta() {
-            LocalDateTime fechaCorrecta = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
-            assertDoesNotThrow(() -> {
-                new Notificacion("ID", "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean m", fechaCorrecta);
-            });
-        }
-	}
-
+    }
 }
+
