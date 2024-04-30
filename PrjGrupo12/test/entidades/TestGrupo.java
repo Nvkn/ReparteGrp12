@@ -90,7 +90,6 @@ class TestGrupo {
         private Grupo grupo;
         private Usuario usuario1;
         private Usuario usuario2;
-        private Usuario usuario3;
 
         @BeforeEach
         public void setUp() {
@@ -134,11 +133,28 @@ class TestGrupo {
         class CPCalcularTransacciones{
         	@Test
             @DisplayName("CP_GR2_2_01: Devolución 2 usuarios - Simple")
-            void CP_GR2_02() {
+            void CP_GR2_2_01() {
                 // Arrange - Se envía un balance en el que el usuario 2 debe 50€ al usuario 1
                 Map<Usuario, Double> balances = grupo.getBalances();
                 balances.put(usuario1, 10.0); // Saldo negativo para usuario1
                 balances.put(usuario2, -10.0); // Saldo positivo para usuario2
+
+                // Act
+                List<String> transacciones = grupo.calcularTransacciones();
+
+                // Assert
+                assertEquals(1, transacciones.size(), "Hay un número de transacciones inesperado."); // Debería haber una transacción pendiente
+                assertTrue(transacciones.get(0).contains("usuario1"), "El usuario1 no está involucrado en la transacción"); // La transacción debería involucrar al usuario1
+                assertTrue(transacciones.get(0).contains("usuario2"), "El usuario2 no está involucrado en la transacción"); // La transacción debería involucrar al usuario2
+            }
+        	
+        	@Test
+            @DisplayName("CP_GR2_2_02: Devolución 2 usuarios - Simple")
+            void CP_GR2_2_02() {
+                // Arrange - Se envía un balance "incorrecto" para que balanceDeudor acabe siendo distinto de 0
+                Map<Usuario, Double> balances = grupo.getBalances();
+                balances.put(usuario1, 10.0); // Saldo negativo para usuario1
+                balances.put(usuario2, -20.0); // Saldo positivo para usuario2
 
                 // Act
                 List<String> transacciones = grupo.calcularTransacciones();
