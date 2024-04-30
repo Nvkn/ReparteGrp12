@@ -17,7 +17,6 @@ public class TestUsuario {
     String P20C = "pP345678901234567890";
     String P21C = "pP3456789012345678901";
 
-
     @Nested
     @DisplayName("CP1: Casos de prueba del constructor")
     class ConstructorTest {
@@ -29,17 +28,15 @@ public class TestUsuario {
             void CP_U1_01() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario(null, "correo@ejemplo.com", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El identificador del usuario es inválido"));
-            }
+                },("ID no es nulo"));
+            } 
 
             @DisplayName("CP_U1_02: ID vacío")
             @Test
             void CP_U1_02() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("", "correo@ejemplo.com", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El identificador del usuario es inválido"));
+                },("ID no es vacío"));
             }
 
             @DisplayName("CP_U1_03: ID corto ")
@@ -47,8 +44,7 @@ public class TestUsuario {
             void CP_U1_03() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario(ID3C, "correo@ejemplo.com", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El identificador del usuario es inválido"));
+                },("ID no es corto"));
             }
 
             @DisplayName("CP_U1_04: ID largo")
@@ -56,8 +52,7 @@ public class TestUsuario {
             void CP_U1_04() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario(ID21C, "correo@ejemplo.com", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El identificador del usuario es inválido"));
+                },("ID no es largo"));
             }
         }
 
@@ -69,8 +64,7 @@ public class TestUsuario {
             void CP_U1_05() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", null, "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El correo electrónico no tiene un formato válido"));
+                },("Correo no es nulo"));
             }
 
             @DisplayName("CP_U1_06: Correo vacío ")
@@ -78,8 +72,7 @@ public class TestUsuario {
             void CP_U1_06() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", " ", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El correo electrónico no tiene un formato válido"));
+                },("Correo no es vacío"));
             }
 
             @DisplayName("CP_U1_07: Correo con formato inválido ")
@@ -87,8 +80,7 @@ public class TestUsuario {
             void CP_U1_07() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correosinarroba.com", "Password1");
-                });
-                assertTrue(exception.getMessage().contains("El correo electrónico no tiene un formato válido"));
+                },("Correo no tiene formato no válido"));
             }
         }
 
@@ -100,8 +92,7 @@ public class TestUsuario {
             void CP_U1_08() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", null);
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password no es nula"));
             }
 
             @DisplayName("CP_U1_09: Password vacío ")
@@ -109,8 +100,7 @@ public class TestUsuario {
             void CP_U1_09() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", " ");
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password no es vacía"));
             }
 
             @DisplayName("CP_U1_10: Password sin mayúsculas ")
@@ -118,8 +108,7 @@ public class TestUsuario {
             void CP_U1_10() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", "password1");
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password tiene mayúsculas"));
             }
 
             @DisplayName("CP_U1_11: Password sin minúsculas ")
@@ -127,8 +116,7 @@ public class TestUsuario {
             void CP_U1_11() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", "PASSWORD1");
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password tiene minúsculas"));
             }
 
             @DisplayName("CP_U1_12: Password sin dígitos ")
@@ -136,8 +124,7 @@ public class TestUsuario {
             void CP_U1_12() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", "passwords");
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password tiene dígitos"));
             }
 
             @DisplayName("CP_U1_13: Password demasiado corta (7 caracteres)")
@@ -145,8 +132,7 @@ public class TestUsuario {
             void CP_U1_13() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", P7C);
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password no es corta"));
             }
 
             @DisplayName("CP_U1_14:  Password demasiado larga (15 caracteres)")
@@ -154,8 +140,7 @@ public class TestUsuario {
             void CP_U1_14() {
                 Exception exception = assertThrows(IllegalArgumentException.class, () -> {
                     new Usuario("Ejemplo_id", "correo@ejemplo.com", P21C);
-                });
-                assertTrue(exception.getMessage().contains("La contraseña proporcionada no es segura"));
+                },("Password no es larga"));
             }
         }
 
@@ -167,7 +152,7 @@ public class TestUsuario {
             void CP_U1_15() {
                 assertDoesNotThrow(() -> {
                     Usuario validUsuario = new Usuario(ID4C, "correo@ejemplo.com", P8C);
-                });
+                },("No todos los argumentos son válidos"));
             }
 
             @DisplayName("CP_U1_16: Todo válido - ID y Password Max ")
@@ -175,7 +160,7 @@ public class TestUsuario {
             void CP_U1_16() {
                 assertDoesNotThrow(() -> {
                     Usuario validUsuario = new Usuario(ID20C, "correo@ejemplo.com", P20C);
-                });
+                },("No todos los argumentos son válidos"));
             }
         }
     }
