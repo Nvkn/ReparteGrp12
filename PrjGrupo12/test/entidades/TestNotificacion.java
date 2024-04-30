@@ -34,7 +34,7 @@ class TestNotificacion {
             void CP_N1_01() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Notificacion(null, M100C, FechaValida);
-                });
+                }, "El destinatario no es nulo.");
             }
         }
 
@@ -46,7 +46,7 @@ class TestNotificacion {
             void CP_N1_02() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Notificacion(usuarioValido, null, FechaValida);
-                });
+                }, "El mensaje no es nulo.");
             }
 
             @DisplayName("CP_N1_03: Mensaje vacío")
@@ -62,7 +62,7 @@ class TestNotificacion {
             void CP_N1_04() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Notificacion(usuarioValido, M101C, FechaValida);
-                });
+                }, "El mensaje no es suficientemente largo.");
             }
         }
 
@@ -82,19 +82,19 @@ class TestNotificacion {
             void CP_N1_06() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Notificacion(usuarioValido, M100C, FechaPosterior);
-                });
+                }, "La fecha no es posterior.");
             }
         }
 
         @Nested
         @DisplayName("Clases de equivalencia válidas")
         class CPValidas {
-            @DisplayName("CP_N1_06: Mensaje máximo")
+            @DisplayName("CP_N1_07: Mensaje máximo")
             @Test
             void CP_GA1_04() {
                 assertDoesNotThrow(() -> {
                     new Notificacion(usuarioValido, M100C, FechaValida);
-                });
+                }, "El caso no es válido.");
             }
         }
     }

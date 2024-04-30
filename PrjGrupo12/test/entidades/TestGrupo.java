@@ -26,7 +26,7 @@ class TestGrupo {
             void CP_GR1_01() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Grupo(null, "Descripcion", usuarioValido);
-                });
+                }, "El Titulo no es nulo.");
             }
 
             @DisplayName("CP_GR1_02: Título vacío")
@@ -34,7 +34,7 @@ class TestGrupo {
             void CP_GR1_02() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Grupo("", "Descripcion", usuarioValido);
-                });
+                }, "El Titulo no está vacío.");
             }
         }
 
@@ -46,7 +46,7 @@ class TestGrupo {
             void CP_GR1_03() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Grupo("Título", null, usuarioValido);
-                });
+                }, "La descripción no es nula.");
             }
 
             @DisplayName("CP_GR1_04: Descripción vacía")
@@ -54,7 +54,7 @@ class TestGrupo {
             void CP_GR1_04() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Grupo("Título", "", usuarioValido);
-                });
+                }, "La descripción no está vacía.");
             }
         }
 
@@ -66,19 +66,19 @@ class TestGrupo {
             void CP_GR1_05() {
                 assertThrows(IllegalArgumentException.class, () -> {
                     new Grupo("Título", "Descripción", null);
-                });
+                }, "El admin no es nulo.");
             }
         }
 
         @Nested
         @DisplayName("Clases de equivalencia válidas")
         class CPValidas {
-            @DisplayName("CP_GR1_06: Todo válido - ID y Password Min ")
+            @DisplayName("CP_GR1_06: Todo válido - ID y Password Min")
             @Test
             void CP_GR1_06() {
                 assertDoesNotThrow(() -> {
                     new Grupo("Título", "Descripción", usuarioValido);
-                });
+                }, "El caso no es válido.");
             }
         }
     }
