@@ -160,8 +160,27 @@ public class Usuario {
     }
 
     // GASTO
-    public Gasto crearGasto(double cantidad, Grupo grupo) {
+    public Gasto crearGasto(double cantidad, Grupo grupo) { 
         return new Gasto(cantidad, this, grupo);
+    }
+    
+    private boolean puedeModificarGasto(Gasto gasto) {
+        if (gasto == null) {
+            throw new IllegalArgumentException("El gasto no puede ser nulo.");
+        }
+        if (!grupos.contains(gasto.getGrupo())) {
+            throw new IllegalArgumentException("El gasto no pertenece a ninguno de los grupos del usuario.");
+        }
+        if (!gasto.getUsuario().equals(this)) {
+            throw new IllegalArgumentException("El gasto no fue creado por el usuario.");
+        }
+        return true;
+    }
+    
+    public void eliminarGasto(Gasto gasto) {
+        if (puedeModificarGasto(gasto)) {
+            gasto.getGrupo().eliminarGasto(gasto);
+        }
     }
     
     // NOTIFICACION

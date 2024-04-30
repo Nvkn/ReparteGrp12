@@ -45,7 +45,7 @@ public class Grupo {
     }
 
     private static boolean esUsuarioValido(Usuario usuario) {
-        return usuario != null;
+        return usuario != null; 
     }
 
 
@@ -115,6 +115,13 @@ public class Grupo {
         }
         return true;
     }
+    
+    public void eliminarGasto(Gasto gasto) {
+        if (esGastoModificable(gasto)) {
+            gastos.remove(gasto);
+            deshacerRepartoGasto(gasto);
+        }
+    }
 
     // Repartir cada gasto y actualizar balance
     private void repartirGasto(Gasto gasto){
@@ -129,6 +136,20 @@ public class Grupo {
             }
         }
         calcularTransacciones();
+    }
+    
+    // Deshacer reparto de gasto y actualizar balance
+    public void deshacerRepartoGasto(Gasto gasto){
+        double cantidad = gasto.getCantidad();
+        Usuario pagador = gasto.getUsuario();
+        double cantidadPorUsuario = cantidad / balances.size();
+        for (Usuario u : balances.keySet()) {
+            if (u.equals(pagador)) {
+                balances.put(u, balances.get(u) - cantidad + cantidadPorUsuario);
+            } else {
+                balances.put(u, balances.get(u) + cantidadPorUsuario);
+            }
+        }
     }
 
     private List<String> calcularTransacciones() {
