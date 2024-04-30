@@ -152,7 +152,7 @@ public class Grupo {
         }
     }
 
-    private List<String> calcularTransacciones() {
+    public List<String> calcularTransacciones() {
         List<String> transacciones = new ArrayList<>();
         // Copia de balances
         Map<Usuario, Double> balances_aux = new HashMap<>(this.balances);
