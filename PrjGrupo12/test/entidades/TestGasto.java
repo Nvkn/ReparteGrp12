@@ -1,20 +1,18 @@
 package entidades;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 class TestGasto {
-    Usuario usuarioValido;
-    Grupo grupoValido;
+    private static Usuario usuarioValido;
+    private static Grupo grupoValido;
 
-    @BeforeEach
-    void setUp() {
-        usuarioValido = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
-        grupoValido = new Grupo("LosCuatro", "Cuatro amigos", usuarioValido);
+    @BeforeAll
+    static void setUp() {
+        usuarioValido = mock(Usuario.class);
+        grupoValido = mock(Grupo.class);
     }
 
     @Nested

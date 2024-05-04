@@ -1,13 +1,11 @@
 package entidades;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import java.time.LocalDateTime;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class TestNotificacion {
     // Abreviaturas
@@ -16,11 +14,11 @@ class TestNotificacion {
     LocalDateTime FechaValida = LocalDateTime.of(2007, 12, 3, 10, 15, 30);
     LocalDateTime FechaPosterior = LocalDateTime.of(2047, 12, 3, 10, 15, 30);
 
-    Usuario usuarioValido;
+    private static Usuario usuarioMocked;
 
-    @BeforeEach
-    void setUp() {
-        usuarioValido = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
+    @BeforeAll
+    static void setUp() {
+        usuarioMocked = mock(Usuario.class);
     }
 
     @Nested
@@ -45,7 +43,7 @@ class TestNotificacion {
             @Test
             void CP_N1_02() {
                 assertThrows(IllegalArgumentException.class, () -> {
-                    new Notificacion(usuarioValido, null, FechaValida);
+                    new Notificacion(usuarioMocked, null, FechaValida);
                 }, "El mensaje no es nulo.");
             }
 
@@ -53,7 +51,7 @@ class TestNotificacion {
             @Test
             void CP_N1_03() {
                 assertThrows(IllegalArgumentException.class, () -> {
-                    new Notificacion(usuarioValido, "", FechaValida);
+                    new Notificacion(usuarioMocked, "", FechaValida);
                 });
             }
 
@@ -61,7 +59,7 @@ class TestNotificacion {
             @Test
             void CP_N1_04() {
                 assertThrows(IllegalArgumentException.class, () -> {
-                    new Notificacion(usuarioValido, M101C, FechaValida);
+                    new Notificacion(usuarioMocked, M101C, FechaValida);
                 }, "El mensaje no es suficientemente largo.");
             }
         }
@@ -73,7 +71,7 @@ class TestNotificacion {
             @Test
             void CP_N1_05() {
                 assertThrows(IllegalArgumentException.class, () -> {
-                    new Notificacion(usuarioValido, M100C, null);
+                    new Notificacion(usuarioMocked, M100C, null);
                 });
             }
 
@@ -81,7 +79,7 @@ class TestNotificacion {
             @Test
             void CP_N1_06() {
                 assertThrows(IllegalArgumentException.class, () -> {
-                    new Notificacion(usuarioValido, M100C, FechaPosterior);
+                    new Notificacion(usuarioMocked, M100C, FechaPosterior);
                 }, "La fecha no es posterior.");
             }
         }
@@ -93,7 +91,7 @@ class TestNotificacion {
             @Test
             void CP_GA1_04() {
                 assertDoesNotThrow(() -> {
-                    new Notificacion(usuarioValido, M100C, FechaValida);
+                    new Notificacion(usuarioMocked, M100C, FechaValida);
                 }, "El caso no es válido.");
             }
         }
