@@ -13,11 +13,13 @@ import java.util.List;
 class TestGrupo {
     private static Usuario usuarioMocked;
     private static Gasto gastoMocked;
+    private static Usuario usuarioValido;
 
     @BeforeAll
     static void setUp() {
         usuarioMocked = mock(Usuario.class);
         gastoMocked = mock(Gasto.class);
+        usuarioValido = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
     }
 
     @Nested
@@ -225,8 +227,44 @@ class TestGrupo {
             }
 
         }
+        
     }
+    
+    @Nested
+    @DisplayName("CP_GR4: Casos de prueba de la historia de usuario: Eliminar Gasto")
+    class EliminarGastoTest {
+        private Grupo grupo;
 
+        @BeforeEach
+        void setUp() {
+            grupo = new Grupo("Grupo Test", "Descripción Test", usuarioValido);
+            gastoMocked= mock(Gasto.class);
+            when(gastoMocked.getGrupo()).thenReturn(grupo);
+            grupo.agregarGasto(gastoMocked);
+        }
 
+        @Test
+        @DisplayName("CP_GR4_01: Intentar eliminar un gasto que no existe")
+        void CP_GR4_01() {
+            Grupo grupo2 = new Grupo("Grupo Test", "Descripción Test", usuarioValido);
+            Gasto gastoInexistente = new Gasto(50.0, usuarioValido, grupo2);
+            assertThrows(IllegalArgumentException.class, () -> grupo.eliminarGasto(gastoInexistente), "Debería lanzarse una excepción indicando que el gasto no pertenece al grupo.");
+        }
+
+        @Test
+        @DisplayName("CP_GR4_02: Eliminar un gasto nulo")
+        void CP_GR4_02() {
+            assertThrows(IllegalArgumentException.class, () -> grupo.eliminarGasto(null), "Debería lanzarse una excepción indicando que el gasto no puede ser nulo.");
+        }
+        
+        @Test
+        @DisplayName("CP_GR4_03: Eliminar un gasto existente")
+        void CP_GR4_03() {
+        	grupo.eliminarGasto(gastoMocked);
+        	assertFalse(grupo.getGastos().contains(gastoMocked), "El gasto debería haber sido eliminado.");
+        	assertTrue(grupo.getBalances().get(usuarioValido) == 0, "El balance del usuario debería haber sido ajustado a 0.");
+        }
+
+    }
 }
 
