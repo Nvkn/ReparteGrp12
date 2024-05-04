@@ -122,6 +122,14 @@ public class Grupo {
             deshacerRepartoGasto(gasto);
         }
     }
+    
+    public void editarGasto(Gasto gasto, double cantidad) {
+        if (esGastoModificable(gasto)) {
+            deshacerRepartoGasto(gasto);
+            gasto.setCantidad(cantidad);
+            repartirGasto(gasto);
+        }
+    }
 
     // Repartir cada gasto y actualizar balance
     private void repartirGasto(Gasto gasto){
