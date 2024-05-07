@@ -1,7 +1,6 @@
 package entidades;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -176,18 +175,19 @@ public class Usuario {
         }
         return true;
     }
-    
+      
     public void eliminarGasto(Gasto gasto) {
         if (puedeModificarGasto(gasto)) {
             gasto.getGrupo().eliminarGasto(gasto);
         }
     }
-    
+
     public void editarGasto(Gasto gasto, double cantidad) {
         if (puedeModificarGasto(gasto)) {
             gasto.getGrupo().editarGasto(gasto, cantidad);
-        }
-    }
+        }
+    }
+    
     // NOTIFICACION
     public void agregarNotificacion(Notificacion notificacion) {
         if (notificacion == null) {
