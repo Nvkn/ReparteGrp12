@@ -265,6 +265,19 @@ class TestGrupo {
         	assertTrue(grupo.getBalances().get(usuarioValido) == 0, "El balance del usuario debería haber sido ajustado a 0.");
         }
 
+        @Test
+        @DisplayName("CP_GR4_04: CAJA BLANCA - Grupo con múltiples usuarios")
+        void CP_GR4_2_02() {
+        	Usuario usuarioValido2 = mock(Usuario.class);
+            usuarioValido2 = new Usuario("ID1235", "correo@ejemplo.com", "Abc123..");
+        	grupo.agregarUsuario(usuarioValido2);
+            grupo.agregarGasto(gastoMocked);
+            grupo.eliminarGasto(gastoMocked);
+        	assertFalse(grupo.getGastos().contains(gastoMocked), "El gasto debería haber sido eliminado.");
+        	assertEquals(grupo.getBalances().get(usuarioValido), 0, "El balance del usuario debería haber sido ajustado a 0.");
+        	assertEquals(grupo.getBalances().get(usuarioValido2), 0, "El balance del usuario debería haber sido ajustado a 0.");
+        }
+
     }
 }
 

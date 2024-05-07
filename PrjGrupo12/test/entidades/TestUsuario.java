@@ -2,6 +2,7 @@ package entidades;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.*;
 
@@ -279,6 +280,61 @@ public class TestUsuario {
                 usuarioValido.agregarNotificacion(notificacionMocked);
                 assertTrue(usuarioValido.getNotificaciones().contains(notificacionMocked), "La notificación no se agregó a la lista de notificaciones del usuario.");
             }, "El método lanzó una excepción inesperada.");
+        }
+    }
+    
+    @Nested
+    @DisplayName("CP_U5_1: CAJA BLANCA - Casos de prueba de la historia de usuario: Eliminar gasto - Usuario.eliminarGasto()")
+    class EliminarGastoTest {
+        private Grupo grupo;
+        private Gasto gastoMocked;
+        private Usuario usuarioValido;
+
+        @BeforeEach
+        void setUp() {
+            usuarioValido = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
+            grupo = new Grupo("Grupo Test", "Descripción Test", usuarioValido);
+            usuarioValido.getGrupos().add(grupo);
+            gastoMocked= mock(Gasto.class);
+            when(gastoMocked.getGrupo()).thenReturn(grupo);
+            when(gastoMocked.getUsuario()).thenReturn(usuarioValido);
+        	when(gastoMocked.getCantidad()).thenReturn(400.0);
+        }
+
+        @Test
+        @DisplayName("CP_U5_01: Intentar eliminar un gasto creado por otro usuario")
+        void CP_GR4_01() {
+            grupo.agregarGasto(gastoMocked);
+            Usuario usuarioValido2 = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
+            usuarioValido2.getGrupos().add(grupo);
+            assertThrows(IllegalArgumentException.class, () -> usuarioValido2.eliminarGasto(gastoMocked), "El gasto no debería poderse eliminar porque no pertenece a ningún grupo.");
+        }
+
+        @Test
+        @DisplayName("CP_U5_02: Intentar eliminar un gasto que no pertenece a nuestros grupos")
+        void CP_GR4_02() {
+            grupo.agregarGasto(gastoMocked);
+            Usuario usuarioValido2 = new Usuario("ID1234", "correo@ejemplo.com", "Abc123..");
+            assertThrows(IllegalArgumentException.class, () -> usuarioValido2.eliminarGasto(gastoMocked), "El gasto no debe ser modificable por el segundo usuario.");
+        }
+
+        @Test
+        @DisplayName("CP_U5_03: Intentar eliminar un gasto nulo")
+        void CP_GR4_03() {
+            Gasto gastoMocked2= mock(Gasto.class);
+            when(gastoMocked2.getGrupo()).thenReturn(grupo);
+            when(gastoMocked2.getUsuario()).thenReturn(usuarioValido);
+            grupo.agregarGasto(gastoMocked2);
+            assertThrows(IllegalArgumentException.class, () -> usuarioValido.eliminarGasto(null), "El gasto no debe ser modificable por el segundo usuario.");
+        }
+        
+        @Test
+        @DisplayName("CP_U5_04: Caso Válido: Eliminar un gasto existente")
+        void CP_GR4_04() {
+            grupo.agregarGasto(gastoMocked);
+            assertDoesNotThrow(() -> {
+            	usuarioValido.eliminarGasto(gastoMocked);
+            }, ("El gasto válido no ha sido eliminado correctamente"));
         }
     }
 }
