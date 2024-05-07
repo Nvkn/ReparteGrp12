@@ -183,6 +183,11 @@ public class Usuario {
         }
     }
     
+    public void editarGasto(Gasto gasto, double cantidad) {
+        if (puedeModificarGasto(gasto)) {
+            gasto.getGrupo().editarGasto(gasto, cantidad);
+        }
+    }
     // NOTIFICACION
     public void agregarNotificacion(Notificacion notificacion) {
         if (notificacion == null) {
