@@ -240,7 +240,8 @@ class TestGrupo {
             grupo = new Grupo("Grupo Test", "Descripción Test", usuarioValido);
             gastoMocked= mock(Gasto.class);
             when(gastoMocked.getGrupo()).thenReturn(grupo);
-            grupo.agregarGasto(gastoMocked);
+            when(gastoMocked.getUsuario()).thenReturn(usuarioValido);
+        	when(gastoMocked.getCantidad()).thenReturn(100.0);
         }
 
         @Test
@@ -260,6 +261,7 @@ class TestGrupo {
         @Test
         @DisplayName("CP_GR4_03: Eliminar un gasto existente")
         void CP_GR4_03() {
+        	grupo.agregarGasto(gastoMocked);
         	grupo.eliminarGasto(gastoMocked);
         	assertFalse(grupo.getGastos().contains(gastoMocked), "El gasto debería haber sido eliminado.");
         	assertTrue(grupo.getBalances().get(usuarioValido) == 0, "El balance del usuario debería haber sido ajustado a 0.");
@@ -269,7 +271,6 @@ class TestGrupo {
         @DisplayName("CP_GR4_04: CAJA BLANCA - Grupo con múltiples usuarios")
         void CP_GR4_2_02() {
         	Usuario usuarioValido2 = mock(Usuario.class);
-            usuarioValido2 = new Usuario("ID1235", "correo@ejemplo.com", "Abc123..");
         	grupo.agregarUsuario(usuarioValido2);
             grupo.agregarGasto(gastoMocked);
             grupo.eliminarGasto(gastoMocked);
