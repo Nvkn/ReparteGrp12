@@ -66,18 +66,21 @@ public class TestIntegracion {
         @Test
         @DisplayName("CP_I2_03: Editar un gasto existente")
         void CP_I2_03() {
-        	
-        	  // Arrange
-            Grupo grupo2 = usuario.crearGrupo("Grupo2", "Segundo grupo");
-            Usuario usuarioValido2 = new Usuario("ID1235", "correo@ejemplo.com", "Abc123..");
-            grupo2.agregarUsuario(usuarioValido2);
-            Gasto g2 = usuario.crearGasto(50.0, grupo2);
-            
-         // Act
-            usuario.editarGasto(g2, 40);
-            assertEquals(grupo2.getBalances().get(usuario), 20, "El balance del usuario debería haber sido ajustado a 0.");
-            assertEquals(grupo2.getBalances().get(usuarioValido2), -20, "El balance del usuario debería haber sido ajustado a 0.");
+            Gasto gasto = usuario.crearGasto(50.0, grupo);
+            assertEquals(50.0, gasto.getCantidad(), "El gasto debería ser el inicial.");
+            double nuevaCantidad = 20.0;
+        	grupo.editarGasto(gasto,nuevaCantidad);
+            assertEquals(nuevaCantidad, gasto.getCantidad(), "El gasto debería haber sido editado a la nueva cantidad.");
+        	assertTrue(grupo.getBalances().get(usuario) == 0, "El balance del usuario debería haber sido ajustado a 0.");
+        }
 
-        }   
+        @Test
+        @DisplayName("CP_I2_04: CAJA BLANCA - Editar gasto desde Usuario")
+        void CP_I2_04() {
+            Gasto gasto = usuario.crearGasto(50.0, grupo);
+            usuario.editarGasto(gasto, 10);
+            assertEquals(10, gasto.getCantidad(), "El gasto debería haber sido editado a la nueva cantidad.");
+
+        }
     }
 }
