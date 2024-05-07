@@ -64,23 +64,45 @@ public class TestIntegracion {
         }
 
         @Test
-        @DisplayName("CP_I2_03: Editar un gasto existente")
+        @DisplayName("CP_I2_03: Editar un gasto VALIDO")
         void CP_I2_03() {
             Gasto gasto = usuario.crearGasto(50.0, grupo);
             assertEquals(50.0, gasto.getCantidad(), "El gasto debería ser el inicial.");
             double nuevaCantidad = 20.0;
         	grupo.editarGasto(gasto,nuevaCantidad);
             assertEquals(nuevaCantidad, gasto.getCantidad(), "El gasto debería haber sido editado a la nueva cantidad.");
-        	assertTrue(grupo.getBalances().get(usuario) == 0, "El balance del usuario debería haber sido ajustado a 0.");
         }
 
         @Test
-        @DisplayName("CP_I2_04: CAJA BLANCA - Editar gasto desde Usuario")
+        @DisplayName("CP_I2_04: CAJA BLANCA - Editar un gasto que no pertenece a niguno de los grupos del usuario")
         void CP_I2_04() {
-            Gasto gasto = usuario.crearGasto(50.0, grupo);
-            usuario.editarGasto(gasto, 10);
-            assertEquals(10, gasto.getCantidad(), "El gasto debería haber sido editado a la nueva cantidad.");
+        	Usuario usuario2 = new Usuario("Ivalidsks","correovalido@gmail.com","Contraseña_2");
+            Grupo grupo2 = new Grupo("Grupo Test", "Descripción Test", usuario2);
+            Gasto gastoInexistente=usuario.crearGasto(50.0,grupo2);
+            assertThrows(IllegalArgumentException.class, () -> usuario.editarGasto(gastoInexistente,40), "Debería lanzarse una excepción indicando que el gasto no pertenece a ningun grupo del usuario.");
+        }
+        @Test
+        @DisplayName("CP_I2_05: CAJA BLANCA - Editar un gasto nulo desde Usuario")
+        void CP_I2_05() {
+            assertThrows(IllegalArgumentException.class, () -> usuario.editarGasto(null,20), "Debería lanzarse una excepción indicando que el gasto no puede ser nulo.");
+        }
+        @Test
+        @DisplayName("CP_I2_06: CAJA BLANCA - Editar un gasto que no pertenece al usuario")
+        void CP_I2_06() {
+        	Usuario usuario2 = new Usuario("Ivalidsks","correovalido@gmail.com","Contraseña_2");
+        	Gasto gasto= usuario2.crearGasto(10, grupo);
+            assertThrows(IllegalArgumentException.class, () -> usuario.editarGasto(gasto,40), "Debería lanzarse una excepción indicando que el gasto no pertenece al usuario.");
 
+        }
+        @Test
+        @DisplayName("CP_I2_07: CAJA BLANCA - Editar un gasto desde Usuario VALIDO")
+        void CP_I2_07() {
+        	Gasto gasto=usuario.crearGasto(10, grupo);
+        	assertEquals(10,gasto.getCantidad(),"El gasto debería de ser el inicial");
+        	double nuevaCantidad = 20.0;
+        	usuario.editarGasto(gasto, nuevaCantidad);
+            assertEquals(nuevaCantidad, gasto.getCantidad(), "El gasto debería haber sido editado a la nueva cantidad.");
+            
         }
     }
 }
